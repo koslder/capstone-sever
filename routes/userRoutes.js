@@ -5,6 +5,6 @@ const { getAdmin, createAdmin, loginUser } = require('../controllers/adminContro
 // Define routes
 router.get('/admins', getAdmin);       // Route to get all users
 router.post('/admins', createAdmin);    // Route to create a new user
-router.get('/login', loginUser);    // Route to Login
+router.post('/login', loginUser);    // Route to Login
 
 module.exports = router;
