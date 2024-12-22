@@ -1,6 +1,6 @@
 const Admin = require('../models/admin');
 
-const getAdmins = async (req, res) => {
+const getAdmin = async (req, res) => {
     try {
         const admins = await Admin.find();
         res.status(200).json(admins)
