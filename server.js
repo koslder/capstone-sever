@@ -20,7 +20,15 @@ mongoose.connect(process.env.MONGO_URI, {
     .catch((err) => console.error(err));
 
 // Routes
-app.get('/', (req, res) => res.send('API is running Hello World'));
+app.get('/', (req, res) => {
+    res.json({
+        message: `${process.env.MONGO_URI} Hello World`,
+        additionalMessage: 'Welcome to my server.',
+        serverStatus: 'Active',
+        uptime: process.uptime()  // Optionally, show server uptime
+    });
+});
+
 
 // Port
 const PORT = process.env.PORT || 5000;
