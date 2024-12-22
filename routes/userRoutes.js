@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, createUser } = require('../controllers/userController');  // Import controller functions
+const { getUsers, createUser } = require('../controllers/adminController');
 
 // Define the routes
 router.get('/users', getUsers);       // Route to get all users
