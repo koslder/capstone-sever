@@ -5,13 +5,10 @@ const loginUser = async (req, res) => {
     try {
         // Checks the username
         const admin = await Admin.findOne({ username });
-        if (!admin) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+        const confirmpassword = await Admin.findOne({ password });
 
-        if (admin.password == password) {
-            return res.status(401).json({ message: 'Password Invalid' });
-        }
+        console.log({ admin }, { confirmpassword });
+
         res.status(200).json({ message: 'Login succesfull' })
     } catch (error) {
         res.status(500).json({ message: error.message });
