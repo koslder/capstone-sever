@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
 // Routes
 app.get('/', (req, res) => {
     res.json({
-        message: `${process.env.MONGO_URI} Hello World`,
+        message: `${process.env.MONGO_URI} Atam bobo`,
         additionalMessage: 'Welcome to my server.',
         serverStatus: 'Active',
         uptime: process.uptime()  // Optionally, show server uptime
