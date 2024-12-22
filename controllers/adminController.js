@@ -3,17 +3,23 @@ const Admin = require('../models/admin');
 const loginUser = async (req, res) => {
     const { username, password } = req.body;
     try {
-        // Checks the username
+        // Check if the username exists
         const admin = await Admin.findOne({ username });
-        const confirmpassword = await Admin.findOne({ password });
+        if (!admin) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-        console.log({ admin }, { confirmpassword });
+        // Compare passwords directly (not recommended for production)
+        if (admin.password !== password) {
+            return res.status(401).json({ message: 'Invalid Password' });
+        }
 
-        res.status(200).json({ message: 'Login succesfull' })
+        // If username and password match
+        res.status(200).json({ message: 'Login successful' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
 
 const getAdmin = async (req, res) => {
     try {
