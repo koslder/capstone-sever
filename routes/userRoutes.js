@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, createUser } = require('../controllers/adminController');
+const { getAdmin, createAdmin } = require('../controllers/adminController');
 
-// Define the routes
-router.get('/users', getUsers);       // Route to get all users
-router.post('/users', createUser);    // Route to create a new user
+// Define routes
+router.get('/admins', getAdmin);       // Route to get all users
+router.post('/admins', createAdmin);    // Route to create a new user
 
 module.exports = router;
