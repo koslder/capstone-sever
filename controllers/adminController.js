@@ -33,4 +33,4 @@ const createAdmin = async (req, res) => {
     }
 };
 
-module.exports = { getAdmin, createUser };
+module.exports = { getAdmin, createAdmin };
