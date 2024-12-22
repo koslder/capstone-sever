@@ -9,10 +9,8 @@ const loginUser = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Check the password
-        const isMatch = await Admin.findOne({ password });
-        if (!isMatch) {
-            return res.status(404).json({ message: 'Invalid Password' })
+        if (admin.password == password) {
+            return res.status(401).json({ message: 'Password Invalid' });
         }
         res.status(200).json({ message: 'Login succesfull' })
     } catch (error) {
