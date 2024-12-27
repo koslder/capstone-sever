@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const userRoutes = require('./routes/userRoutes'); // Import user routes
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
@@ -11,14 +11,12 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// Connect to MongoDB
 connectDB();
 
 // Use routes
 app.use('/api', userRoutes);  // Set up API endpoint prefix
 
-// Basic test route to verify if the server is running
+// Test
 app.get('/', (req, res) => res.send('Hello, World!'));
 
 // Start server

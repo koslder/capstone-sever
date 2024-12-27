@@ -21,6 +21,8 @@ const Admin = require('../models/admin');
 //     }
 // };
 
+
+// Get all admin
 const getAdmin = async (req, res) => {
     try {
         const admins = await Admin.find();
@@ -30,8 +32,8 @@ const getAdmin = async (req, res) => {
     }
 };
 
-// Handler for creating admin
 
+// Handler for creating admin
 const createAdmin = async (req, res) => {
     const { firstname, lastname, birthdate, age, email, username, password, address } = req.body;
 
@@ -54,6 +56,8 @@ const createAdmin = async (req, res) => {
     }
 };
 
+
+// Delete by id
 const deleteAdmin = async (req, res) => {
     const { id } = req.params;
 
@@ -73,6 +77,7 @@ const deleteAdmin = async (req, res) => {
     }
 }
 
+// Get's admin by id
 const getAdminById = async (req, res) => {
     const { id } = req.params;
 
@@ -92,6 +97,8 @@ const getAdminById = async (req, res) => {
     }
 }
 
+
+// Updates
 const updateAdmin = async (req, res) => {
     const { id } = req.params;
 
