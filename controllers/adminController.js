@@ -59,4 +59,4 @@ const deleteAdmin = async (req, res) => {
     console.log("id", id);
 }
 
-module.exports = { getAdmin, createAdmin };
+module.exports = { getAdmin, createAdmin, deleteAdmin };
