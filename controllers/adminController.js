@@ -98,7 +98,7 @@ const updateAdmin = async (req, res) => {
     const admin = req.body;
 
     try {
-        const updatedAdmin = await Admin.findByIdAndUpdate(id, admin, { new: true });
+        const updatedAdmin = await Admin.findByIdAndUpdate(id, admin, { new: true, runValidators: true });
         res.status(200).json({
             success: true,
             data: updatedAdmin,
