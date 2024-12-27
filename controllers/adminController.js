@@ -56,7 +56,59 @@ const createAdmin = async (req, res) => {
 
 const deleteAdmin = async (req, res) => {
     const { id } = req.params;
-    console.log("id", id);
+
+    try {
+        await Admin.findByIdAndDelete(id);
+        res.status(200).json({
+            success: true,
+            message: id,
+            info: "Admin successfully deleted"
+        });
+    } catch (error) {
+        res.status(404).json({
+            success: false,
+            message: id,
+            info: "Admin id not found"
+        });
+    }
 }
 
-module.exports = { getAdmin, createAdmin, deleteAdmin };
+const getAdminById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await Admin.findbyId(id);
+        res.status(200).json({
+            success: true,
+            message: id
+        });
+    } catch (error) {
+        res.status(404).json({
+            success: false,
+            message: id,
+            info: "Id not found or Inavlid"
+        });
+    }
+}
+
+const updateAdmin = async (req, res) => {
+    const { id } = req.params;
+
+    const admin = req.body;
+
+    try {
+        const updatedAdmin = await Admin.findByIdAndUpdate(id, admin, { new: true });
+        res.status(200).json({
+            success: true,
+            data: updatedAdmin,
+            info: "Updated successfully!"
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Server Error"
+        });
+    }
+}
+
+module.exports = { getAdmin, createAdmin, deleteAdmin, getAdminById, updateAdmin };
