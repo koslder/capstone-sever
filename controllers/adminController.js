@@ -77,7 +77,7 @@ const getAdminById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        await Admin.findbyId(id);
+        await Admin.findById(id);
         res.status(200).json({
             success: true,
             message: id
