@@ -1,25 +1,25 @@
 const Admin = require('../models/admin');
 
-const loginUser = async (req, res) => {
-    const { username, password } = req.body;
-    try {
-        // Check if the username exists
-        const admin = await Admin.findOne({ username });
-        if (!admin) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+// const loginUser = async (req, res) => {
+//     const { username, password } = req.body;
+//     try {
+//         // Check if the username exists
+//         const admin = await Admin.findOne({ username });
+//         if (!admin) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
 
-        // Compare passwords directly (not recommended for production)
-        if (admin.password !== password) {
-            return res.status(401).json({ message: 'Invalid Password' });
-        }
+//         // Compare passwords directly (not recommended for production)
+//         if (admin.password !== password) {
+//             return res.status(401).json({ message: 'Invalid Password' });
+//         }
 
-        // If username and password match
-        res.status(200).json({ message: 'Login successful' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+//         // If username and password match
+//         res.status(200).json({ message: 'Login successful' });
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
 
 const getAdmin = async (req, res) => {
     try {
@@ -54,4 +54,9 @@ const createAdmin = async (req, res) => {
     }
 };
 
-module.exports = { getAdmin, createAdmin, loginUser };
+const deleteAdmin = async (req, res) => {
+    const { id } = req.params;
+    console.log("id", id);
+}
+
+module.exports = { getAdmin, createAdmin };
