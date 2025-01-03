@@ -3,17 +3,15 @@ const mongoose = require('mongoose');
 const Menu = new mongoose.Schema({
     menuItem: {
         type: String,
-        required: true,
-        trim: true
+
     },
     price: {
         type: Number,
-        required: true,
+
     },
     estimatedTime: {
         type: String,
-        required: true,
-        trim: true
+
     },
     imageLink: {
         type: String,
