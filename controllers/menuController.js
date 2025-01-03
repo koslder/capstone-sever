@@ -2,13 +2,27 @@ const Menu = require('../models/menu');
 
 
 
-// Get all admin
+// Get all menu items
 const getMenu = async (req, res) => {
     try {
-        const menus = await Menu.find();
-        res.status(200).json(menus)
+        const menus = await Menu.find(); // Fetch all menu items from the database
+
+        // Return the menus in JSON format with a 200 OK status
+        res.status(200).json({
+            success: true,
+            message: "Menu items retrieved successfully",
+            data: menus
+        });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        // Log the error for debugging purposes
+        console.error("Error fetching menu items:", error);
+
+        // Return an error message with a 500 status
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+            error: error.message
+        });
     }
 };
 
