@@ -15,7 +15,6 @@ const Menu = new mongoose.Schema({
     },
     imageLink: {
         type: String,
-        required: true,
         match: [/^https?:\/\/.*\.(jpg|jpeg|png|gif|webp)$/, 'Please enter a valid image URL']
     }
 }, {
