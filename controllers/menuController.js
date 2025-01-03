@@ -1,7 +1,5 @@
 const Menu = require('../models/menu');
 
-
-
 // Get all menu items
 const getMenu = async (req, res) => {
     try {
@@ -27,7 +25,25 @@ const getMenu = async (req, res) => {
 };
 
 
-// Handler for creating admin
+// // Handler for creating menu
+// const createMenu = async (req, res) => {
+//     const { menuItem, price, estimatedTime, imageLink } = req.body;
+
+//     try {
+//         const newMenu = new Menu({
+//             menuItem,
+//             price,
+//             estimatedTime,
+//             imageLink
+//         })
+
+//         await newMenu.save();
+//         res.status(201).json(newMenu);
+//     } catch (error) {
+//         res.status(502).json({ message: error.message });
+//     }
+// };
+
 const createMenu = async (req, res) => {
     const { menuItem, price, estimatedTime, imageLink } = req.body;
 
@@ -37,7 +53,9 @@ const createMenu = async (req, res) => {
             price,
             estimatedTime,
             imageLink
-        })
+        });
+
+        console.log("New menu item to be saved:", newMenu); // Debug log
 
         await newMenu.save();
         res.status(201).json(newMenu);
@@ -45,7 +63,6 @@ const createMenu = async (req, res) => {
         res.status(502).json({ message: error.message });
     }
 };
-
 
 // Delete by id
 const deleteMenu = async (req, res) => {
@@ -67,7 +84,7 @@ const deleteMenu = async (req, res) => {
     }
 }
 
-// Get's admin by id
+// Get's menu by id
 const getMenuById = async (req, res) => {
     const { id } = req.params;
 
