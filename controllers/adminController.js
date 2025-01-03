@@ -35,7 +35,7 @@ const getAdmin = async (req, res) => {
 
 // Handler for creating admin
 const createAdmin = async (req, res) => {
-    const { firstname, lastname, birthdate, age, email, username, password, address } = req.body;
+    const { firstname, lastname, birthdate, age, email, username, password, address, role } = req.body;
 
     try {
         const newAdmin = new Admin({
@@ -119,5 +119,6 @@ const updateAdmin = async (req, res) => {
         });
     }
 }
+
 
 module.exports = { getAdmin, createAdmin, deleteAdmin, getAdminById, updateAdmin };
