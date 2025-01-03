@@ -25,25 +25,6 @@ const getMenu = async (req, res) => {
 };
 
 
-// // Handler for creating menu
-// const createMenu = async (req, res) => {
-//     const { menuItem, price, estimatedTime, imageLink } = req.body;
-
-//     try {
-//         const newMenu = new Menu({
-//             menuItem,
-//             price,
-//             estimatedTime,
-//             imageLink
-//         })
-
-//         await newMenu.save();
-//         res.status(201).json(newMenu);
-//     } catch (error) {
-//         res.status(502).json({ message: error.message });
-//     }
-// };
-
 const createMenu = async (req, res) => {
     const { menuItem, price, estimatedTime, imageLink } = req.body;
 
@@ -55,7 +36,7 @@ const createMenu = async (req, res) => {
             imageLink
         });
 
-        console.log("New menu item to be saved:", newMenu); // Debug log
+        // console.log("New menu item to be saved:", newMenu); // Debug log
 
         await newMenu.save();
         res.status(201).json(newMenu);
