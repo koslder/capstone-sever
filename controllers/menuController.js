@@ -26,20 +26,26 @@ const getMenu = async (req, res) => {
 
 
 const createMenu = async (req, res) => {
-    const { menuItem, price, estimatedTime, imageLink } = req.body;
+    const menuItems = req.body; // This expects an array of menu items
 
     try {
-        const newMenu = new Menu({
-            menuItem,
-            price,
-            estimatedTime,
-            imageLink
+        // Validate that the body is an array of objects
+        if (!Array.isArray(menuItems)) {
+            return res.status(400).json({
+                success: false,
+                message: "Request body must be an array of menu items"
+            });
+        }
+
+        // Insert all the menu items into the database at once
+        const newMenus = await Menu.insertMany(menuItems);
+
+        // Return the full data with the newly inserted fields
+        res.status(201).json({
+            success: true,
+            message: "Menu items added successfully",
+            data: newMenus
         });
-
-        // console.log("New menu item to be saved:", newMenu); // Debug log
-
-        await newMenu.save();
-        res.status(201).json(newMenu);
     } catch (error) {
         res.status(502).json({ message: error.message });
     }
