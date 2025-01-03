@@ -46,7 +46,8 @@ const createAdmin = async (req, res) => {
             email,
             username,
             password,
-            address
+            address,
+            role
         })
 
         await newAdmin.save();
