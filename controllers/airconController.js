@@ -3,13 +3,15 @@ const Aircon = require('../models/aircon');
 // Create a new Aircon
 const createAircon = async (req, res) => {
     try {
-        const aircon = new Aircon(req.body);
-        const savedAircon = await aircon.save();
-        res.status(201).json(savedAircon);
+        console.log(req.body); // Log the incoming data
+        const aircons = await Aircon.insertMany(req.body); // Bulk insert
+        res.status(201).json(aircons);
     } catch (error) {
+        console.error('Error creating aircons:', error.message);
         res.status(400).json({ message: error.message });
     }
-}
+};
+
 
 const getAllAircon = async (req, res) => {
     try {
