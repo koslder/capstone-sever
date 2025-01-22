@@ -1,12 +1,21 @@
 const Event = require('../models/event');
+const Aircon = require('../models/aircon');
+const Admin = require('../models/admin');
+
 
 const createEvent = async (req, res) => {
     try {
-        console.log("Request Body: ", req.body); // Check the incoming data
+        console.log("Request Body:", req.body);
         const eventData = req.body;
+
+        // Check if Aircon and Technician IDs exist
         const aircon = await Aircon.findById(eventData.aircon);
         if (!aircon) return res.status(404).json({ message: 'Aircon not found' });
 
+        const technician = await Admin.findById(eventData.technician);
+        if (!technician) return res.status(404).json({ message: 'Technician not found' });
+
+        // Create the event
         const newEvent = await Event.create(eventData);
 
         // Link event to aircon
@@ -19,6 +28,7 @@ const createEvent = async (req, res) => {
         res.status(500).json({ message: 'Error creating event' });
     }
 };
+
 
 const getAllEvents = async (req, res) => {
     try {
