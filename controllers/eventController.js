@@ -12,8 +12,16 @@ const createEvent = async (req, res) => {
         const aircon = await Aircon.findById(eventData.aircon);
         if (!aircon) return res.status(404).json({ message: 'Aircon not found' });
 
+        // Check if all technician IDs are valid
+        const areValidTechnicians = eventData.technicians.every(id => mongoose.Types.ObjectId.isValid(id));
+        if (!areValidTechnicians) {
+            return res.status(400).json({ message: 'Invalid technician ID format' });
+        }
+
         // Check if all technicians exist
         const technicians = await Admin.find({ '_id': { $in: eventData.technicians } });
+        console.log('Technicians found:', technicians);
+
         if (technicians.length !== eventData.technicians.length) {
             return res.status(404).json({ message: 'One or more technicians not found' });
         }
