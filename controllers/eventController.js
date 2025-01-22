@@ -2,6 +2,7 @@ const Event = require('../models/event');
 
 const createEvent = async (req, res) => {
     try {
+        console.log("Request Body: ", req.body); // Check the incoming data
         const eventData = req.body;
         const aircon = await Aircon.findById(eventData.aircon);
         if (!aircon) return res.status(404).json({ message: 'Aircon not found' });
