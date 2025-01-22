@@ -8,12 +8,15 @@ const createEvent = async (req, res) => {
         console.log("Request Body:", req.body);
         const eventData = req.body;
 
-        // Check if Aircon and Technician IDs exist
+        // Check if Aircon exists
         const aircon = await Aircon.findById(eventData.aircon);
         if (!aircon) return res.status(404).json({ message: 'Aircon not found' });
 
-        const technician = await Admin.findById(eventData.technician);
-        if (!technician) return res.status(404).json({ message: 'Technician not found' });
+        // Check if all technicians exist
+        const technicians = await Admin.find({ '_id': { $in: eventData.technicians } });
+        if (technicians.length !== eventData.technicians.length) {
+            return res.status(404).json({ message: 'One or more technicians not found' });
+        }
 
         // Create the event
         const newEvent = await Event.create(eventData);
@@ -57,15 +60,16 @@ const getEventById = async (req, res) => {
 const updateEvent = async (req, res) => {
     try {
         const { id } = req.params;
+
         const updatedEvent = await Event.findByIdAndUpdate(id, req.body, { new: true });
         if (!updatedEvent) return res.status(404).json({ message: 'Event not found' });
+
         res.status(200).json(updatedEvent);
     } catch (error) {
         console.error('Error updating event:', error);
         res.status(500).json({ message: 'Error updating event' });
     }
 };
-
 
 const deleteEvent = async (req, res) => {
     try {

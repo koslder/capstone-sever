@@ -6,7 +6,7 @@ const EventSchema = new mongoose.Schema({
     description: { type: String },
     start: { type: Date, required: true },
     end: { type: Date, required: true },
-    technician: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true },
+    technicians: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true }],
     status: { type: String, enum: ['Scheduled', 'Completed', 'Canceled'], default: 'Completed' },
     notes: { type: String },
 }, { timestamps: true });
