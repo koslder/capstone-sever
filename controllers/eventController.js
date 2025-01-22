@@ -1,6 +1,7 @@
 const Event = require('../models/event');
 const Aircon = require('../models/aircon');
 const Admin = require('../models/admin');
+const mongoose = require('mongoose');
 
 
 const createEvent = async (req, res) => {
