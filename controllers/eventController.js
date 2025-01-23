@@ -30,9 +30,19 @@ const createEvent = async (req, res) => {
         // Create the event
         const newEvent = await Event.create(eventData);
 
-        // Link event to aircon
-        aircon.maintenanceHistory.push(newEvent._id);
+        // Check if the new event ID already exists in the maintenanceHistory array
+        if (!aircon.maintenanceHistory.includes(newEvent._id)) {
+            aircon.maintenanceHistory.push(newEvent._id);
+        }
+
+        // Save the updated aircon object
         await aircon.save();
+
+        // Attach the combined history to the new event (if needed)
+        newEvent.maintenanceHistory = aircon.maintenanceHistory;
+
+        // Save the new event
+        await newEvent.save();
 
         res.status(201).json(newEvent);
     } catch (error) {
@@ -40,7 +50,6 @@ const createEvent = async (req, res) => {
         res.status(500).json({ message: 'Error creating event' });
     }
 };
-
 
 const getAllEvents = async (req, res) => {
     try {
