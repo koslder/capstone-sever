@@ -24,13 +24,26 @@ const getAllAircon = async (req, res) => {
 
 const getAirconById = async (req, res) => {
     try {
-        const aircon = await Aircon.findById(req.params.id);
-        if (!aircon) return res.status(404).json({ message: 'Aircon not found' });
+        const aircon = await Aircon.findById(req.params.id).populate({
+            path: 'maintenanceHistory', // Populate the maintenanceHistory field
+            options: { limit: 3, sort: { createdAt: -1 } }, // Limit to 3 latest entries and sort by newest
+            populate: {
+                path: 'technicians', // Populate the technicians field inside each event
+                select: 'name email', // Fetch only specific fields
+            },
+        });
+
+        if (!aircon) {
+            return res.status(404).json({ message: 'Aircon not found' });
+        }
+
         res.status(200).json(aircon);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: error.message });
     }
-}
+};
+
 
 const updateAircon = async (req, res) => {
     try {
