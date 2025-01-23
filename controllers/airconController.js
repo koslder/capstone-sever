@@ -28,8 +28,8 @@ const getAirconById = async (req, res) => {
             path: 'maintenanceHistory', // Populate the maintenanceHistory field
             options: { limit: 3, sort: { createdAt: -1 } }, // Limit to 3 latest entries and sort by newest
             populate: {
-                path: 'technicians', // Populate the technicians field inside each event
-                select: 'name email', // Fetch only specific fields
+                path: 'technicians',
+                select: 'firstname lastname',
             },
         });
 
