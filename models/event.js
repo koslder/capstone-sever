@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { updateMaintenanceHistory } = require('../middlewares/eventMiddleware');
 
 const EventSchema = new mongoose.Schema({
     aircon: { type: mongoose.Schema.Types.ObjectId, ref: 'Aircon', required: true },
@@ -10,6 +11,10 @@ const EventSchema = new mongoose.Schema({
     status: { type: String, enum: ['Scheduled', 'Completed', 'Canceled'], default: 'Completed' },
     notes: { type: String },
 }, { timestamps: true });
+
+EventSchema.post('save', async function (doc) {
+    await updateMaintenanceHistory(doc);
+});
 
 const Event = mongoose.model('Event', EventSchema);
 
