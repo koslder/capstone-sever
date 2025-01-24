@@ -3,11 +3,15 @@ const Aircon = require('../models/aircon');
 const Admin = require('../models/admin');
 const mongoose = require('mongoose');
 
-
 const createEvent = async (req, res) => {
     try {
         console.log("Request Body:", req.body);
         const eventData = req.body;
+
+        // Convert event start time to Philippine Time (PHT)
+        const eventStart = new Date(eventData.start);
+        const eventStartLocal = eventStart.toLocaleString('en-US', { timeZone: 'Asia/Manila' });
+        eventData.start = new Date(eventStartLocal).toISOString(); // Convert back to ISO string if needed
 
         // Check if Aircon exists
         const aircon = await Aircon.findById(eventData.aircon);
@@ -63,7 +67,6 @@ const getAllEvents = async (req, res) => {
     }
 };
 
-
 const getEventById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -75,7 +78,6 @@ const getEventById = async (req, res) => {
         res.status(500).json({ message: 'Error fetching event' });
     }
 };
-
 
 const updateEvent = async (req, res) => {
     try {
@@ -109,6 +111,5 @@ const deleteEvent = async (req, res) => {
         res.status(500).json({ message: 'Error deleting event' });
     }
 };
-
 
 module.exports = { createEvent, getAllEvents, deleteEvent, updateEvent, getEventById };
