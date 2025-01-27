@@ -110,5 +110,17 @@ const deleteEvent = async (req, res) => {
     }
 };
 
+const technicianAssinged = async (req, res) => {
+    const { technicianId } = req.params;
 
-module.exports = { createEvent, getAllEvents, deleteEvent, updateEvent, getEventById };
+    try {
+        const events = await Event.find({ technicians: technicianId }).populate('aircon').populate('technicians');
+        res.json(events);
+    } catch (error) {
+        console.error("Error fetching assigned events:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
+module.exports = { createEvent, getAllEvents, deleteEvent, updateEvent, getEventById, technicianAssinged };

@@ -35,7 +35,8 @@ const {
     getAllEvents,
     deleteEvent,
     updateEvent,
-    getEventById
+    getEventById,
+    technicianAssinged
 } = require('../controllers/eventController');
 
 // Admins
@@ -61,6 +62,7 @@ router.patch('/aircon/:id', updateAircon);
 
 // Events
 router.get('/events', getAllEvents);
+router.get('/events/assigned/:technicianId', technicianAssinged);
 router.post('/events', createEvent);
 router.delete('/events/:id', deleteEvent);
 router.get('/events/:id', getEventById);
