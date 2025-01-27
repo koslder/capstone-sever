@@ -108,10 +108,9 @@ const loginAdmin = async (req, res) => {
         const admin = await Admin.findOne({ username });
         if (!admin) return res.status(404).json({ message: "Admin not found!" });
 
-        console.log(password);
-        console.log(admin.password);
-        const isMatch = await bcrypt.compare(password, admin.password);
-        if (!isMatch) return res.status(401).json({ message: "Invalid password" });
+        const adminPassword = admin.password;
+        const isMatch = await bcrypt.compare(password, adminPassword);
+        if (!isMatch) return res.status(401).json({ message: "Invalid password", password, adminPassword });
 
         const token = jwt.sign(
             { id: admin._id, role: admin.role },
