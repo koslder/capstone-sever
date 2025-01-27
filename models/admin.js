@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); // Ensure bcrypt is imported
 
 const Admin = new mongoose.Schema({
     firstname: { type: String },
     lastname: { type: String },
-    birthdate: { type: String }, // Change to String
+    birthdate: { type: String },
     age: { type: Number },
     email: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
