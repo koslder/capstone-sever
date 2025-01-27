@@ -45,10 +45,10 @@ router.post('/login', loginAdmin); // Login is public
 // Protected Admin Routes
 router.use(verifyToken, verifyAdmin); // Apply middleware for routes below
 
-router
-    .route('/admins')
-    .get(getAdmin)
-    .post(createAdmin);
+// router
+//     .route('/admins')
+//     .get(getAdmin)
+//     .post(createAdmin);
 
 router
     .route('/admins/:id')
