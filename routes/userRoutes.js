@@ -43,7 +43,7 @@ const {
 router.post('/login', loginAdmin); // Login is public
 
 // Protected Admin Routes
-// router.use(verifyToken, verifyAdmin); // Apply middleware for routes below
+router.use(verifyToken, verifyAdmin); // Apply middleware for routes below
 
 router
     .route('/admins')
