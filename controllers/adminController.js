@@ -119,7 +119,9 @@ const loginAdmin = async (req, res) => {
         }
 
         const isMatch = await bcrypt.compare(password, admin.password);
+        const hashed = bcrypt.hash(password);
         console.log('Provided Password:', password);
+        console.log('Provided Hashed Password:', hashed);
         console.log('Stored Hashed Password:', admin.password);
         console.log('Password Match:', isMatch); // Log the result of the comparison
 
