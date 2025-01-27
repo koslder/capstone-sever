@@ -7,7 +7,8 @@ const {
     createAdmin,
     deleteAdmin,
     getAdminById,
-    updateAdmin
+    updateAdmin,
+    loginAdmin
 } = require('../controllers/adminController');
 
 // Menu
@@ -64,5 +65,8 @@ router.post('/events', createEvent);
 router.delete('/events/:id', deleteEvent);
 router.get('/events/:id', getEventById);
 router.patch('/events/:id', updateEvent);
+
+// Public
+router.post('/login', loginAdmin);
 
 module.exports = router;
