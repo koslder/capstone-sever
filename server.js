@@ -11,14 +11,34 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Connect to the database
 connectDB();
 
-// Use routes
-app.use('/api', userRoutes);  // Set up API endpoint prefix
+// Routes
+app.use('/api', userRoutes); // Use `/api` prefix for all routes
 
-// Test
+// Default route
 app.get('/', (req, res) => res.send('Hello, World!'));
 
-// Start server
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || 'Internal Server Error',
+    });
+});
+
+// Start the server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    console.log('SIGTERM signal received: closing server...');
+    server.close(() => {
+        console.log('Server closed.');
+        process.exit(0);
+    });
+});
