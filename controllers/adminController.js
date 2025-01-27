@@ -109,7 +109,7 @@ const loginAdmin = async (req, res) => {
         if (!admin) return res.status(404).json({ message: "Admin not found!" });
 
         const adminPassword = admin.password;
-        const isMatch = await bcrypt.compare(password, adminPassword);
+        const isMatch = await compare(password, adminPassword);
         if (!isMatch) return res.status(401).json({ message: "Invalid password", password, adminPassword });
 
         const token = jwt.sign(
