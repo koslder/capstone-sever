@@ -17,7 +17,14 @@ const createAdmin = async (req, res) => {
     const { firstname, lastname, birthdate, age, email, username, password, address, role } = req.body;
 
     try {
-        const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+        // Check if the username or email already exists
+        const existingAdmin = await Admin.findOne({ $or: [{ username }, { email }] });
+        if (existingAdmin) {
+            return res.status(409).json({ success: false, message: 'Username or email already exists' });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newAdmin = new Admin({
             firstname,
             lastname,
@@ -31,9 +38,10 @@ const createAdmin = async (req, res) => {
         });
 
         await newAdmin.save();
-        res.status(201).json(newAdmin);
+        res.status(201).json({ success: true, data: newAdmin });
     } catch (error) {
-        res.status(502).json({ message: error.message });
+        console.error('Error creating admin:', error);
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 };
 
@@ -110,10 +118,11 @@ const loginAdmin = async (req, res) => {
             return res.status(404).json({ message: "Admin not found!" });
         }
 
-        console.log("Inputed Password:", password);
-        console.log("Stored Password:", Admin.password);
-        console.log("Stored Password:", admin.password);
         const isMatch = await bcrypt.compare(password, admin.password);
+        console.log('Provided Password:', password);
+        console.log('Stored Password:', admin.password);
+        console.log('Password Match:', isMatch); // Log the result of the comparison
+
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid password" });
         }
@@ -130,6 +139,7 @@ const loginAdmin = async (req, res) => {
             admin: { id: admin._id, firstname: admin.firstname, role: admin.role },
         });
     } catch (error) {
+        console.error('Error during login:', error);
         res.status(500).json({ message: error.message });
     }
 };
