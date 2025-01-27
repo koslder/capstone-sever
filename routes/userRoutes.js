@@ -1,15 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken, verifyAdmin } = require('../middlewares/auth');
 
-// Admin/Employee
+// Admin/employee
 const {
     getAdmin,
     createAdmin,
     deleteAdmin,
     getAdminById,
-    updateAdmin,
-    loginAdmin,
+    updateAdmin
 } = require('../controllers/adminController');
 
 // Menu
@@ -18,7 +16,7 @@ const {
     createMenu,
     deleteMenu,
     getMenuById,
-    updateMenu,
+    updateMenu
 } = require('../controllers/menuController');
 
 // Aircon
@@ -27,7 +25,7 @@ const {
     createAircon,
     deleteAircon,
     getAirconById,
-    updateAircon,
+    updateAircon
 } = require('../controllers/airconController');
 
 // Events
@@ -36,60 +34,35 @@ const {
     getAllEvents,
     deleteEvent,
     updateEvent,
-    getEventById,
+    getEventById
 } = require('../controllers/eventController');
 
-// Public Routes
-router.post('/login', loginAdmin); // Login is public
-
-// Protected Admin Routes
-router.use(verifyToken, verifyAdmin); // Apply middleware for routes below
-
-router
-    .route('/admins')
-    .get(getAdmin)
-    .post(createAdmin);
-
-router
-    .route('/admins/:id')
-    .get(getAdminById)
-    .patch(updateAdmin)
-    .delete(deleteAdmin);
+// Admins
+router.get('/admins', getAdmin);
+router.post('/admins', createAdmin);
+router.delete('/admins/:id', deleteAdmin);
+router.get('/admins/:id', getAdminById);
+router.patch('/admins/:id', updateAdmin);
 
 // Menus
-router
-    .route('/menu')
-    .get(getMenu)
-    .post(createMenu);
-
-router
-    .route('/menu/:id')
-    .get(getMenuById)
-    .patch(updateMenu)
-    .delete(deleteMenu);
+router.get('/menu', getMenu);
+router.post('/menu', createMenu);
+router.delete('/menu/:id', deleteMenu);
+router.get('/menu/:id', getMenuById);
+router.patch('/menu/:id', updateMenu);
 
 // Aircons
-router
-    .route('/aircon')
-    .get(getAllAircon)
-    .post(createAircon);
-
-router
-    .route('/aircon/:id')
-    .get(getAirconById)
-    .patch(updateAircon)
-    .delete(deleteAircon);
+router.get('/aircon', getAllAircon);
+router.post('/aircon', createAircon);
+router.delete('/aircon/:id', deleteAircon);
+router.get('/aircon/:id', getAirconById);
+router.patch('/aircon/:id', updateAircon);
 
 // Events
-router
-    .route('/events')
-    .get(getAllEvents)
-    .post(createEvent);
-
-router
-    .route('/events/:id')
-    .get(getEventById)
-    .patch(updateEvent)
-    .delete(deleteEvent);
+router.get('/events', getAllEvents);
+router.post('/events', createEvent);
+router.delete('/events/:id', deleteEvent);
+router.get('/events/:id', getEventById);
+router.patch('/events/:id', updateEvent);
 
 module.exports = router;
