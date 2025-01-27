@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt'); // Ensure bcrypt is imported
+const bcrypt = require('bcryptjs'); // Ensure bcrypt is imported
 
 const Admin = new mongoose.Schema({
     firstname: { type: String },
