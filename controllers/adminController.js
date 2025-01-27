@@ -138,7 +138,12 @@ const loginAdmin = async (req, res) => {
         res.status(200).json({
             success: true,
             token,
-            admin: { id: admin._id, firstname: admin.firstname, role: admin.role },
+            admin: {
+                id: admin._id,
+                firstname: admin.firstname,
+                lastname: admin.lastname,
+                role: admin.role
+            },
         });
     } catch (error) {
         console.error('Error during login:', error);
