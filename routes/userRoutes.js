@@ -68,7 +68,7 @@ router.post('/events', createEvent);
 router.delete('/events/:id', deleteEvent);
 router.get('/events/:id', getEventById);
 router.patch('/events/:id', updateEvent);
-router.get('/tasks', updateEvent);
+router.get('/tasks', getAnnualMaintenanceTasks);
 
 // Public
 router.post('/login', loginAdmin);
