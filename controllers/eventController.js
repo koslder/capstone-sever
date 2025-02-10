@@ -122,5 +122,32 @@ const technicianAssinged = async (req, res) => {
     }
 };
 
+const getAnnualMaintenanceTasks = async (req, res) => {
+    try {
+        const annualTasks = [
+            "Comprehensive System Inspection, Cleaning, and Servicing",
+            "Clean Evaporator and Condenser Coils",
+            "Check and Test the Refrigerant",
+            "Check Airflow ",
+            "Inspect Electric Controls and Terminals ",
+            "Inspect and Unclog the Drain ",
+            "Straighten and Clean the Fins ",
+            "Lubricate All Moving Parts",
+            "Check Controls of the System ",
+            "Check all gas (or oil) connections, gas pressure, burner combustion and heat exchanger",
+            "Change the batteries",
+            "Blower and Fan Check",
+            "Replace Air Filter",
+            "Clean Air Conditioner Condensers",
+            "Check thermostat settings",
+            "Ensure Proper Ventilation",
+            "Clearance"
+        ];
+        res.status(200).json(annualTasks);
+    } catch (error) {
+        console.error("Error fetching annual maintenance tasks:", error);
+        res.status500.json({ message: "Error fetching annual maintenance tasks" });
+    }
+};
 
-module.exports = { createEvent, getAllEvents, deleteEvent, updateEvent, getEventById, technicianAssinged };
+module.exports = { createEvent, getAllEvents, deleteEvent, updateEvent, getEventById, technicianAssinged, getAnnualMaintenanceTasks };

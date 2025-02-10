@@ -36,7 +36,8 @@ const {
     deleteEvent,
     updateEvent,
     getEventById,
-    technicianAssinged
+    technicianAssinged,
+    getAnnualMaintenanceTasks
 } = require('../controllers/eventController');
 
 // Admins
@@ -67,6 +68,7 @@ router.post('/events', createEvent);
 router.delete('/events/:id', deleteEvent);
 router.get('/events/:id', getEventById);
 router.patch('/events/:id', updateEvent);
+router.get('/tasks', updateEvent);
 
 // Public
 router.post('/login', loginAdmin);
