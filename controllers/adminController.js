@@ -109,6 +109,7 @@ const updateAdmin = async (req, res) => {
 };
 
 // Login admin
+// Login admin
 const loginAdmin = async (req, res) => {
     const { username, password } = req.body;
 
@@ -118,11 +119,10 @@ const loginAdmin = async (req, res) => {
             return res.status(404).json({ message: "Admin not found!" });
         }
 
-        const isMatch = await bcrypt.compare(password, admin.password);
-        const hashed = bcrypt.hash(password);
         console.log('Provided Password:', password);
-        console.log('Provided Hashed Password:', hashed);
         console.log('Stored Hashed Password:', admin.password);
+
+        const isMatch = await bcrypt.compare(password, admin.password);
         console.log('Password Match:', isMatch); // Log the result of the comparison
 
         if (!isMatch) {
@@ -142,7 +142,7 @@ const loginAdmin = async (req, res) => {
                 id: admin._id,
                 firstname: admin.firstname,
                 lastname: admin.lastname,
-                role: admin.role
+                role: admin.role,
             },
         });
     } catch (error) {
@@ -150,6 +150,7 @@ const loginAdmin = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 module.exports = {
     getAdmin,
