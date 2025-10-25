@@ -22,7 +22,7 @@ app.use('/api', userRoutes); // Use `/api` prefix for all routes
 app.get('/', (req, res) => {
     if (process.env.NODE_ENV === 'production') {
         // Redirect to your deployed frontend URL
-        res.redirect(process.env.FRONTEND_URL || 'https://your-react-app-url.com');
+        res.redirect(process.env.VITE_API_URL || `http://localhost:${PORT}`);
     } else {
         // Return API status for development
         res.json({
