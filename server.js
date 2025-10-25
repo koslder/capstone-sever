@@ -3,7 +3,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
-const testConnection = require('./config/testDb');
 
 dotenv.config();
 
@@ -15,7 +14,6 @@ app.use(express.json());
 
 // Connect to the database
 connectDB();
-testConnection();
 
 // Routes
 app.use('/api', userRoutes); // Use `/api` prefix for all routes
