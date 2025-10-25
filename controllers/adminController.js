@@ -23,8 +23,9 @@ const createAdmin = async (req, res) => {
             return res.status(409).json({ success: false, message: 'Username or email already exists' });
         }
 
+        console.log('asdasdsadasd');
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // const hashedPassword = await bcrypt.hash(password, 10);
         const newAdmin = new Admin({
             firstname,
             lastname,
@@ -32,7 +33,7 @@ const createAdmin = async (req, res) => {
             age,
             email,
             username,
-            password: hashedPassword, // Store hashed password
+            password, // Store hashed password
             address,
             role,
         });
@@ -122,7 +123,7 @@ const loginAdmin = async (req, res) => {
         console.log('Provided Password:', password);
         console.log('Stored Hashed Password:', admin.password);
 
-        const isMatch = await bcrypt.compare(password, admin.password);
+        // const isMatch = await bcrypt.compare(password, admin.password);
         console.log('Password Match:', isMatch); // Log the result of the comparison
 
         if (!isMatch) {
