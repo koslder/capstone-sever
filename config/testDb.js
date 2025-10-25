@@ -5,7 +5,7 @@ const connectDB = require('./db');
 // Load environment variables
 dotenv.config();
 
-async function testConnection() {
+const testConnection = async () => {
     try {
         // Test connection
         await connectDB();
