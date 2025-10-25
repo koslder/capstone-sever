@@ -59,4 +59,4 @@ async function testConnection() {
 }
 
 // Run the test
-testConnection();
+module.export = testConnection();
