@@ -18,8 +18,19 @@ connectDB();
 // Routes
 app.use('/api', userRoutes); // Use `/api` prefix for all routes
 
-// Default route
-app.get('/', (req, res) => res.send('Hello, World!'));
+// Default route - redirect to frontend URL in production, or send API status in development
+app.get('/', (req, res) => {
+    if (process.env.NODE_ENV === 'production') {
+        // Redirect to your deployed frontend URL
+        res.redirect(process.env.FRONTEND_URL || 'https://your-react-app-url.com');
+    } else {
+        // Return API status for development
+        res.json({
+            status: 'API is running',
+            environment: process.env.NODE_ENV || 'development'
+        });
+    }
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
