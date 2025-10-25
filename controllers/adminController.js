@@ -14,35 +14,65 @@ const getAdmin = async (req, res) => {
 
 // Handler for creating admin
 const createAdmin = async (req, res) => {
-    const { firstname, lastname, birthdate, age, email, username, password, address, role } = req.body;
-
     try {
+        const { firstname, lastname, birthdate, age, email, username, password, address, role } = req.body;
+
+        // Input validation
+        if (!email || !username || !password) {
+            return res.status(400).json({
+                success: false,
+                message: 'Email, username, and password are required'
+            });
+        }
+
         // Check if the username or email already exists
         const existingAdmin = await Admin.findOne({ $or: [{ username }, { email }] });
         if (existingAdmin) {
-            return res.status(409).json({ success: false, message: 'Username or email already exists' });
+            return res.status(409).json({
+                success: false,
+                message: 'Username or email already exists'
+            });
         }
 
-        console.log('asdasdsadasd');
-        // Hash the password
-        // const hashedPassword = await bcrypt.hash(password, 10);
+        // Hash the password before saving
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new admin with hashed password
         const newAdmin = new Admin({
             firstname,
             lastname,
             birthdate,
-            age,
+            age: parseInt(age) || 0,
             email,
             username,
-            password, // Store hashed password
+            password: hashedPassword,
             address,
-            role,
+            role: role || 'user'
         });
 
-        await newAdmin.save();
-        res.status(201).json({ success: true, data: newAdmin });
+        // Save to database
+        const savedAdmin = await newAdmin.save();
+
+        // Return success without sensitive data
+        res.status(201).json({
+            success: true,
+            data: {
+                id: savedAdmin._id,
+                firstname: savedAdmin.firstname,
+                lastname: savedAdmin.lastname,
+                email: savedAdmin.email,
+                username: savedAdmin.username,
+                role: savedAdmin.role
+            }
+        });
     } catch (error) {
         console.error('Error creating admin:', error);
-        res.status(500).json({ success: false, message: 'Server error' });
+        // Send more detailed error message in development
+        res.status(500).json({
+            success: false,
+            message: 'Server error while creating admin',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 };
 
@@ -115,19 +145,28 @@ const loginAdmin = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const admin = await Admin.findOne({ username });
-        if (!admin) {
-            return res.status(404).json({ message: "Admin not found!" });
+        if (!username || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Username and password are required"
+            });
         }
 
-        console.log('Provided Password:', password);
-        console.log('Stored Hashed Password:', admin.password);
+        const admin = await Admin.findOne({ username });
+        if (!admin) {
+            return res.status(404).json({
+                success: false,
+                message: "Admin not found!"
+            });
+        }
 
-        // const isMatch = await bcrypt.compare(password, admin.password);
-        console.log('Password Match:', isMatch); // Log the result of the comparison
+        const isMatch = await bcrypt.compare(password, admin.password);
 
         if (!isMatch) {
-            return res.status(401).json({ message: "Invalid password" });
+            return res.status(401).json({
+                success: false,
+                message: "Invalid password"
+            });
         }
 
         const token = jwt.sign(
