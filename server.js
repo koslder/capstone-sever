@@ -18,19 +18,8 @@ connectDB();
 // Routes
 app.use('/api', userRoutes); // Use `/api` prefix for all routes
 
-// Default route - redirect to frontend URL in production, or send API status in development
-app.get('/', (req, res) => {
-    if (process.env.NODE_ENV === 'production') {
-        // Redirect to your deployed frontend URL
-        res.redirect(process.env.VITE_API_URL || `http://localhost:${PORT}`);
-    } else {
-        // Return API status for development
-        res.json({
-            status: 'API is running',
-            environment: process.env.NODE_ENV || 'development'
-        });
-    }
-});
+// Default route
+app.get('/', (req, res) => res.render('Hello, World!'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
