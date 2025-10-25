@@ -17,25 +17,11 @@ const createAdmin = async (req, res) => {
     try {
         const { firstname, lastname, birthdate, age, email, username, password, address, role } = req.body;
 
-        // Input validation
-        if (!email) {
+        // Input validation for required fields only
+        if (!username || !password) {
             return res.status(400).json({
                 success: false,
-                message: 'Email is required'
-            });
-        }
-        // Input validation
-        if (!username) {
-            return res.status(400).json({
-                success: false,
-                message: 'Username is required'
-            });
-        }
-        // Input validation
-        if (!password) {
-            return res.status(400).json({
-                success: false,
-                message: 'Password is required'
+                message: 'Username and password are required'
             });
         }
 
