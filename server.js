@@ -19,7 +19,7 @@ connectDB();
 app.use('/api', userRoutes); // Use `/api` prefix for all routes
 
 // Default route
-app.get('/', (req, res) => res.render('Hello, World!'));
+app.get('/', (req, res) => res.send('Hello, World!'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
